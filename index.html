@@ -68,8 +68,8 @@ footer a{color:var(--yel);text-decoration:none}
 .sum{display:flex;justify-content:space-between;padding:10px 0 2px;font-weight:500}
 .sum.big{font-weight:700;font-size:17px;padding-top:6px}
 label{display:block;font-size:13px;color:var(--mut);margin:10px 0 3px}
-input,select,textarea{width:100%;padding:10px 12px;border:1px solid #c5ced8;border-radius:6px;background:#fff}
-input[type=checkbox]{width:auto}
+in,select,textarea{width:100%;padding:10px 12px;border:1px solid #c5ced8;border-radius:6px;background:#fff}
+in[type=checkbox]{width:auto}
 input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--navy);outline-offset:1px}
 .hp{position:absolute;inset-inline-start:-9999px;height:0;overflow:hidden}
 .err{color:var(--red);font-size:13px;min-height:20px;margin-top:8px}
@@ -152,7 +152,7 @@ input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid v
 
 <script>
 /* ====== الإعداد الوحيد المطلوب في الملف ====== */
-const URL_API = "PASTE_YOUR_SHEET_URL_HERE";   // لينك Google Apps Script (ينتهي بـ /exec)
+const URL_API = "https://script.google.com/macros/s/AKfycbyPBkfEm2B7HSF1AawG_vsvHBX6kgDIB--YPXR-aKqGiCHXq-X-aoO-HnR2AEjU2V-tjQ/exec";   // لينك Google Apps Script (ينتهي بـ /exec)
 
 let DATA={settings:{},products:[]},cat="all",term="",cart={},A={pw:"",tab:"p",d:null,q:""};
 try{cart=JSON.parse(localStorage.getItem("ex2cart")||"{}")}catch(e){}
