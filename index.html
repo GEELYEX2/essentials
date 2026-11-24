@@ -24,8 +24,8 @@ button{cursor:pointer}
 .wrap{max-width:1120px;margin:auto;padding:0 18px}
 
 /* header */
-header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.hd{display:flex;align-items:center;gap:14px;height:64px}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:box-shadow .3s}
+.hd{display:flex;align-items:center;gap:14px;height:64px;transition:height .3s}
 .brand{display:flex;align-items:center;gap:10px;margin-inline-end:auto;user-select:none;-webkit-user-select:none;cursor:pointer}
 .mark{width:36px;height:36px;border-radius:10px;background:var(--navy);color:var(--yel);display:grid;place-items:center;font-weight:700;font-size:19px}
 .brand b{display:block;font-size:17px;line-height:1.2}
@@ -38,19 +38,30 @@ nav.main a:hover{color:var(--ink)}
 .cartbtn i{font-style:normal;background:var(--yel);color:#2a2100;min-width:22px;height:22px;border-radius:99px;display:grid;place-items:center;font-size:12px;padding:0 6px}
 
 /* hero */
-.hero{position:relative;background:linear-gradient(135deg,rgba(11,31,51,.9) 0%,rgba(18,48,77,.82) 55%,rgba(27,77,115,.74) 100%),url(images/hero.jpg) center/cover no-repeat,#0b1f33;color:#fff;overflow:hidden}
-.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(520px 320px at 85% 10%,rgba(255,194,26,.22),transparent 70%),repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 26px)}
-.hero .wrap{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center;padding-top:64px;padding-bottom:92px}
-.eyebrow{display:inline-block;color:var(--yel);font-weight:600;font-size:12.5px;letter-spacing:1.4px;margin-bottom:12px}
-.hero h1{margin:0 0 14px;font-size:clamp(28px,4.6vw,46px);line-height:1.3;font-weight:700}
-.hero p{margin:0 0 26px;color:#c4d3e2;font-size:16px;max-width:520px}
+.hero{position:relative;overflow:hidden;color:#fff;background:#0b1f33;min-height:560px;display:flex;align-items:center}
+.hbg{position:absolute;inset:-5%;background:url(images/hero.jpg) center/cover no-repeat;animation:kb 30s ease-in-out infinite alternate;will-change:transform}
+@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.16) translate(-1.5%,-1%)}}
+.hov{position:absolute;inset:0;background:linear-gradient(to left,rgba(8,22,38,.96) 0%,rgba(8,22,38,.88) 36%,rgba(8,22,38,.5) 70%,rgba(8,22,38,.25) 100%),linear-gradient(to top,rgba(8,22,38,.75) 0%,transparent 38%)}
+[dir=ltr] .hov{background:linear-gradient(to right,rgba(8,22,38,.96) 0%,rgba(8,22,38,.88) 36%,rgba(8,22,38,.5) 70%,rgba(8,22,38,.25) 100%),linear-gradient(to top,rgba(8,22,38,.75) 0%,transparent 38%)}
+.hin{position:relative;width:100%;padding-top:84px;padding-bottom:120px}
+.hin>*{max-width:600px}
+.eyebrow{display:inline-block;color:var(--yel);font-weight:600;font-size:12.5px;letter-spacing:1.4px;margin-bottom:14px}
+.hero h1{margin:0 0 16px;font-size:clamp(30px,4.8vw,50px);line-height:1.28;font-weight:700;text-wrap:balance;text-shadow:0 2px 20px rgba(0,0,0,.35)}
+.hero p{margin:0 0 28px;color:#d3deea;font-size:16.5px}
 .btns{display:flex;gap:10px;flex-wrap:wrap}
-.btn{display:inline-block;text-decoration:none;border-radius:99px;padding:12px 24px;font-weight:600;font-size:15px;border:1.5px solid transparent}
+.btn{display:inline-block;text-decoration:none;border-radius:99px;padding:13px 28px;font-weight:600;font-size:15px;border:1.5px solid transparent}
 .btn.y{background:var(--yel);color:#2a2100}
-.btn.y:hover{background:var(--yel2)}
-.btn.o{border-color:rgba(255,255,255,.4);color:#fff}
-.btn.o:hover{background:rgba(255,255,255,.1)}
-.hcar{width:100%;color:#fff;opacity:.28}
+.btn.y:hover{background:var(--yel2);box-shadow:0 10px 24px rgba(255,194,26,.35)}
+.btn.o{border-color:rgba(255,255,255,.45);color:#fff;background:rgba(255,255,255,.06)}
+.btn.o:hover{background:rgba(255,255,255,.16)}
+.hcats{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:30px}
+.hcats:empty{display:none}
+.hl{font-size:13px;color:#b7c7d8;margin-inline-end:4px}
+.hc{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;border-radius:99px;padding:7px 16px;font-size:13.5px;font-weight:500}
+.hc:hover{background:rgba(255,255,255,.24);transform:translateY(-2px)}
+.a1,.a2,.a3,.a4,.a5{opacity:0;animation:up .9s cubic-bezier(.2,.7,.2,1) forwards}
+.a2{animation-delay:.12s}.a3{animation-delay:.24s}.a4{animation-delay:.36s}.a5{animation-delay:.5s}
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 
 /* trust */
 .trust{position:relative;margin-top:-40px;z-index:2}
@@ -76,7 +87,7 @@ h2{margin:4px 0 6px;font-size:clamp(22px,3.2vw,32px);line-height:1.35}
 
 /* product cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));gap:18px}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s}
 .card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(11,31,51,.1)}
 .pimg{position:relative;aspect-ratio:1/1;background:linear-gradient(135deg,#eef2f6,#e4eaf0);display:grid;place-items:center;color:#97a6b6;overflow:hidden}
 .pimg img{width:100%;height:100%;object-fit:cover}
@@ -111,9 +122,9 @@ footer{margin-top:72px;background:var(--navy);color:#a9bccd}
 .fwa{position:fixed;bottom:18px;inset-inline-end:18px;z-index:15;background:#25d366;color:#04210f;font-weight:700;text-decoration:none;padding:12px 20px;border-radius:99px;box-shadow:0 4px 14px rgba(0,0,0,.25);display:none}
 
 /* cart */
-.shade{position:fixed;inset:0;background:rgba(10,20,30,.55);z-index:30;display:none}
-.shade.show{display:block}
-.panel{position:fixed;top:0;bottom:0;inset-inline-start:0;width:min(440px,100%);background:#fff;z-index:31;transform:translateX(102%);visibility:hidden;transition:transform .22s,visibility .22s;display:flex;flex-direction:column}
+.shade{position:fixed;inset:0;background:rgba(10,20,30,.55);z-index:30;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.shade.show{opacity:1;visibility:visible}
+.panel{position:fixed;top:0;bottom:0;inset-inline-start:0;width:min(440px,100%);background:#fff;z-index:31;transform:translateX(102%);visibility:hidden;transition:transform .34s cubic-bezier(.2,.7,.2,1),visibility .34s;display:flex;flex-direction:column}
 [dir=ltr] .panel{transform:translateX(-102%)}
 .panel.show,[dir=ltr] .panel.show{transform:none;visibility:visible}
 .ph2{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
@@ -141,8 +152,8 @@ input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{out
 .done{text-align:center;padding:44px 8px}
 .done .ck{width:60px;height:60px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;margin:0 auto 14px;font-size:30px}
 .done .no{display:inline-block;margin:10px 0;padding:6px 16px;background:var(--bg);border:1px dashed #9fb0c0;border-radius:8px;font-weight:700;direction:ltr}
-.toast{position:fixed;bottom:22px;inset-inline:16px;margin:auto;max-width:360px;background:#16222d;color:#fff;padding:11px 16px;border-radius:10px;z-index:99;text-align:center;font-size:14px;display:none}
-.toast.show{display:block}
+.toast{position:fixed;bottom:22px;inset-inline:16px;margin:auto;max-width:360px;background:#16222d;color:#fff;padding:11px 16px;border-radius:10px;z-index:99;text-align:center;font-size:14px;opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .3s,transform .3s,visibility .3s}
+.toast.show{opacity:1;visibility:visible;transform:none}
 .toast.bad{background:var(--red)}
 
 /* لوحة التحكم (عربي دايمًا) */
@@ -186,10 +197,31 @@ input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{out
 .ord a{color:var(--navy);font-weight:700}
 .sec{font-weight:700;margin:22px 0 4px}
 
+/* حركات وانتقالات */
+.trust .box{animation:up .9s .55s cubic-bezier(.2,.7,.2,1) backwards}
+.rv{opacity:0}
+.rv.in{opacity:1;animation:up .8s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:var(--d,0s)}
+.card{animation:up .6s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0)*50ms)}
+.pimg img,.pimg svg{transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.card:not(.out):hover .pimg img{transform:scale(1.07)}
+.card:not(.out):hover .pimg svg{transform:scale(1.12)}
+.why .c{transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s}
+.why .c:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(11,31,51,.1);border-color:#cfd8e2}
+.why .c:hover .ic{background:var(--yel);color:#2a2100}
+.ic{transition:background .3s,color .3s}
+.btn,.add,.go,.cartbtn,.lang,.pill,.hc{transition:background .2s,color .2s,border-color .2s,transform .18s,box-shadow .25s}
+.btn:active,.add:active,.go:active,.cartbtn:active,.lang:active,.pill:active,.hc:active{transform:scale(.96)}
+.cartbtn:hover,.lang:hover{transform:translateY(-1px)}
+.cartbtn i.bump{animation:bump .45s}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.55)}100%{transform:scale(1)}}
+header.sc{box-shadow:0 6px 22px rgba(11,31,51,.1)}
+header.sc .hd{height:56px}
+
 @media (max-width:820px){
   nav.main{display:none}
-  .hero .wrap{grid-template-columns:1fr;padding-top:44px;padding-bottom:78px}
-  .hcar{display:none}
+  .hero{min-height:0}
+  .hin{padding-top:52px;padding-bottom:88px}
+  .hov,[dir=ltr] .hov{background:linear-gradient(rgba(8,22,38,.84),rgba(8,22,38,.7)),linear-gradient(to top,rgba(8,22,38,.7) 0%,transparent 40%)}
   .trust .box{grid-template-columns:1fr}
   .trust .it+.it{border-inline-start:0;border-top:1px solid var(--line)}
   .why{grid-template-columns:1fr}
@@ -205,7 +237,7 @@ input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{out
   .pf{flex-wrap:wrap}
   .brand small{display:none}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.panel,.card{transition:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.a1,.a2,.a3,.a4,.a5{opacity:1}}
 </style>
 </head>
 <body id="top">
@@ -216,15 +248,16 @@ input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{out
   <button class="cartbtn" id="cartBtn"><span data-t="cart"></span><i id="cnt">0</i></button>
 </div></header>
 
-<div class="hero"><div class="wrap">
-  <div>
-    <span class="eyebrow" data-t="eyebrow"></span>
-    <h1 data-t="h1"></h1>
-    <p data-t="hsub"></p>
-    <div class="btns"><a class="btn y" href="#products" data-t="cta1"></a><a class="btn o" href="#contact" data-t="cta2"></a></div>
+<div class="hero">
+  <div class="hbg"></div><div class="hov"></div>
+  <div class="wrap hin">
+    <span class="eyebrow a1" data-t="eyebrow"></span>
+    <h1 class="a2" data-t="h1"></h1>
+    <p class="a3" data-t="hsub"></p>
+    <div class="btns a4"><a class="btn y" href="#products" data-t="cta1"></a><a class="btn o" href="#contact" data-t="cta2"></a></div>
+    <div class="hcats a5" id="hcats"></div>
   </div>
-  <svg class="hcar" viewBox="0 0 420 170" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 118c0-14 10-22 34-27l54-34c10-6 22-9 36-9h96c18 0 33 6 46 18l28 25c28 4 52 10 52 27v10c0 6-4 10-10 10h-14"/><path d="M72 128H36c-9 0-14-4-14-10"/><circle cx="98" cy="128" r="26"/><circle cx="98" cy="128" r="10"/><circle cx="322" cy="128" r="26"/><circle cx="322" cy="128" r="10"/><path d="M124 128h172"/><path d="M146 52l-32 36h132l-8-36z"/></svg>
-</div></div>
+</div>
 
 <div class="wrap trust"><div class="box">
   <div class="it"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5L16 9.5"/></svg></span><span data-t="tr1"></span></div>
@@ -233,10 +266,10 @@ input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{out
 </div></div>
 
 <section id="products"><div class="wrap">
-  <div class="lbl" data-t="plabel"></div>
-  <h2 data-t="ptitle"></h2>
-  <p class="sub" data-t="psub"></p>
-  <div class="ctrl">
+  <div class="lbl rv" data-t="plabel"></div>
+  <h2 class="rv" style="--d:.08s" data-t="ptitle"></h2>
+  <p class="sub rv" style="--d:.16s" data-t="psub"></p>
+  <div class="ctrl rv" style="--d:.24s">
     <div class="pills" id="tabs"></div>
     <div class="sbox"><input id="q" type="search" data-tp="search" aria-label="search"></div>
   </div>
@@ -244,12 +277,12 @@ input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{out
 </div></section>
 
 <section><div class="wrap">
-  <div class="lbl" data-t="wlabel"></div>
-  <h2 data-t="wtitle"></h2>
+  <div class="lbl rv" data-t="wlabel"></div>
+  <h2 class="rv" style="--d:.08s" data-t="wtitle"></h2>
   <div class="why">
-    <div class="c"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5L16 9.5"/></svg></span><h3 data-t="w1t"></h3><p data-t="w1d"></p></div>
-    <div class="c"><span class="ic"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><h3 data-t="w2t"></h3><p data-t="w2d"></p></div>
-    <div class="c"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M3 4h3l2.5 11h10l2-8H7"/></svg></span><h3 data-t="w3t"></h3><p data-t="w3d"></p></div>
+    <div class="c rv" style="--d:0.1s"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5L16 9.5"/></svg></span><h3 data-t="w1t"></h3><p data-t="w1d"></p></div>
+    <div class="c rv" style="--d:0.22s"><span class="ic"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><h3 data-t="w2t"></h3><p data-t="w2d"></p></div>
+    <div class="c rv" style="--d:0.34s"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M3 4h3l2.5 11h10l2-8H7"/></svg></span><h3 data-t="w3t"></h3><p data-t="w3d"></p></div>
   </div>
 </div></section>
 
@@ -279,7 +312,7 @@ const URL_API = "https://script.google.com/macros/s/AKfycbyPBkfEm2B7HSF1AawG_vsv
 /* ====== النصوص (عربي / English) ====== */
 const T={
 ar:{tag:"قطع غيار وإكسسوارات جيلي EX2",nav_home:"الرئيسية",nav_products:"المنتجات",nav_contact:"تواصل معنا",cart:"السلة",
-eyebrow:"جيلي EX2 • قطع غيار وإكسسوارات",h1:"خلّي عربيتك EX2 أشيك وأكتر راحة",hsub:"دواسات، قطع غيار وإكسسوارات مختارة لجيلي EX2 الكهربائية. اطلب أونلاين وهنكلمك نأكد الطلب.",cta1:"تصفح المنتجات",cta2:"تواصل معنا",
+eyebrow:"جيلي EX2 • قطع غيار وإكسسوارات",h1:"خلّي عربيتك EX2 أشيك وأكتر راحة",hsub:"دواسات، قطع غيار وإكسسوارات مختارة لجيلي EX2 الكهربائية. اطلب أونلاين وهنكلمك نأكد الطلب.",cta1:"تصفح المنتجات",cta2:"تواصل معنا",shopby:"تسوق حسب القسم",
 tr1:"مختارة لجيلي EX2",tr2:"الدفع عند الاستلام",tr3:"تأكيد الطلب بمكالمة",
 plabel:"منتجاتنا",ptitle:"اختار القطعة المناسبة لعربيتك",psub:"شوف المنتجات والأسعار المتاحة حاليًا.",search:"ابحث عن منتج...",all:"الكل",
 wlabel:"ليه تطلب من عندنا؟",wtitle:"طلب سهل من أول لآخر",
@@ -297,7 +330,7 @@ confirm:"تأكيد الطلب",sending:"جاري إرسال الطلب...",e_co
 e_closed:"استقبال الطلبات متوقف مؤقتًا. من فضلك كلمنا تليفونيًا.",e_unavail:"أحد المنتجات لم يعد متاحًا. حدّث الصفحة وجرب تاني.",e_left:"المتاح من \"{name}\" هو {n} فقط",e_sold:"\"{name}\" نفد من المخزون",
 done_t:"تم استلام طلبك",done_no:"رقم الطلب",done_msg:"هنتصل بيك على الرقم {phone} لتأكيد الطلب وتفاصيل الشحن.",back:"رجوع للمتجر"},
 en:{tag:"Geely EX2 parts & accessories",nav_home:"Home",nav_products:"Products",nav_contact:"Contact",cart:"Cart",
-eyebrow:"GEELY EX2 • PARTS & ACCESSORIES",h1:"Make your Geely EX2 smarter and more comfortable",hsub:"Pedals, spare parts and accessories picked for the Geely EX2. Order online and we will call you to confirm.",cta1:"Browse products",cta2:"Contact us",
+eyebrow:"GEELY EX2 • PARTS & ACCESSORIES",h1:"Make your Geely EX2 smarter and more comfortable",hsub:"Pedals, spare parts and accessories picked for the Geely EX2. Order online and we will call you to confirm.",cta1:"Browse products",cta2:"Contact us",shopby:"Shop by category",
 tr1:"Picked for the Geely EX2",tr2:"Cash on delivery",tr3:"Order confirmed by phone",
 plabel:"OUR PRODUCTS",ptitle:"Pick the right part for your car",psub:"See the products and prices available right now.",search:"Search products...",all:"All",
 wlabel:"WHY ORDER FROM US",wtitle:"Easy ordering, start to finish",
@@ -380,20 +413,25 @@ function render(){
   if(!cats.includes(cat))cat="all";
   $("tabs").innerHTML=cats.map(c=>`<button class="pill${c===cat?" on":""}" data-c="${esc(c)}">${c==="all"?t("all"):esc(loc(c))}</button>`).join("");
   [...$("tabs").children].forEach(b=>b.onclick=()=>{cat=b.dataset.c;[...$("tabs").children].forEach(x=>x.classList.toggle("on",x===b));drawList()});
-  drawList();count();
+  drawList();count();heroCats(cats);
+}
+function heroCats(cats){
+  const c=cats.filter(x=>x!=="all");
+  $("hcats").innerHTML=c.length?`<span class="hl">${t("shopby")}</span>`+c.map(x=>`<button class="hc" data-c="${esc(x)}">${esc(loc(x))}</button>`).join(""):"";
+  $("hcats").querySelectorAll(".hc").forEach(b=>b.onclick=()=>{cat=b.dataset.c;render();$("products").scrollIntoView({behavior:"smooth"})});
 }
 function drawList(){
   if(!loaded&&!DATA.products.length){$("list").innerHTML=`<div class="empty">${URL_API.indexOf("PASTE")===0?t("setup"):t("loading")}</div>`;return}
   const items=DATA.products.filter(p=>(cat==="all"||p.cat===cat)&&(!term||(p.name+" "+p.desc+" "+p.cat).toLowerCase().includes(term.toLowerCase())));
   if(!items.length){$("list").innerHTML=`<div class="empty">${t("none")}</div>`;return}
-  $("list").innerHTML=items.map(p=>{
+  $("list").innerHTML=items.map((p,i)=>{
     const out=p.stock<=0;
     const badge=out?`<span class="tagb d">${t("outb")}</span>`:(p.stock<=5?`<span class="tagb">${t("left").replace("{n}",fmt(p.stock))}</span>`:"");
-    return `<article class="card${out?" out":""}"><div class="pimg">${imgTag(p.img,loc(p.name))}${badge}</div><div class="cb"><div class="pcat">${esc(loc(p.cat))}</div><h3>${esc(loc(p.name))}</h3><p class="pd">${esc(loc(p.desc))}</p><div class="pf"><div class="pr">${fmt(p.price)}<small>${t("cur")}</small></div><button class="add" data-c="${esc(p.code)}"${out?" disabled":""}>${out?t("out"):t("add")}</button></div></div></article>`}).join("");
+    return `<article class="card${out?" out":""}" style="--i:${Math.min(i,10)}"><div class="pimg">${imgTag(p.img,loc(p.name))}${badge}</div><div class="cb"><div class="pcat">${esc(loc(p.cat))}</div><h3>${esc(loc(p.name))}</h3><p class="pd">${esc(loc(p.desc))}</p><div class="pf"><div class="pr">${fmt(p.price)}<small>${t("cur")}</small></div><button class="add" data-c="${esc(p.code)}"${out?" disabled":""}>${out?t("out"):t("add")}</button></div></div></article>`}).join("");
   document.querySelectorAll(".add:not(:disabled)").forEach(b=>b.onclick=()=>{
     const p=byCode(b.dataset.c),n=(cart[p.code]||0)+1;
     if(n>p.stock){toast(t("max"),1);return}
-    cart[p.code]=n;saveCart();count();b.textContent=t("added");setTimeout(()=>{b.textContent=t("add")},900)});
+    cart[p.code]=n;saveCart();count();bump();b.textContent=t("added");setTimeout(()=>{b.textContent=t("add")},900)});
 }
 const totals=()=>{let s=0,c=0;for(const k in cart){const p=byCode(k);if(p){s+=p.price*cart[k];c+=cart[k]}}return{t:s,c}};
 const count=()=>{$("cnt").textContent=fmt(totals().c)};
@@ -603,6 +641,14 @@ function setTab(){
     if(r.ok){A.pw=a;sessionStorage.setItem("ex2pw",a);$("np").value=$("np2").value="";$("perr").textContent="";toast("تم تغيير كلمة المرور")}else $("perr").textContent=r.msg||"تعذر التغيير"};
 }
 
+function bump(){const e=$("cnt");e.classList.remove("bump");void e.offsetWidth;e.classList.add("bump")}
+addEventListener("scroll",()=>document.querySelector("header").classList.toggle("sc",scrollY>12),{passive:true});
+(function(){
+  const els=document.querySelectorAll(".rv");
+  if(!("IntersectionObserver" in window)||matchMedia("(prefers-reduced-motion: reduce)").matches){els.forEach(e=>e.classList.add("in"));return}
+  const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.12});
+  els.forEach(e=>io.observe(e));
+})();
 setLang(lang);
 loadData();
 </script>
