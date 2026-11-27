@@ -262,6 +262,35 @@ input:focus,select:focus,textarea:focus,button:focus-visible,a:focus-visible{out
   .pdinfo{padding:34px 26px 26px}
 }
 
+/* معرض الصور والفيديو + قايمة الأقسام */
+.csel{display:none;flex:1 1 100%}
+@media(max-width:700px){.pills{display:none}.csel{display:block}.sbox{flex:1 1 100%}}
+.mcnt{position:absolute;bottom:10px;inset-inline-end:10px;background:rgba(11,31,51,.78);color:#fff;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;display:flex;align-items:center;gap:5px}
+.pimg .mcnt svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gal{width:100%;--gh:clamp(230px,44vh,400px)}
+.gmain{position:relative;width:100%;height:var(--gh);display:grid;place-items:center;overflow:hidden;border-radius:10px;touch-action:pan-y}
+.gal .gmain img{max-width:100%;max-height:var(--gh);width:auto;height:auto;object-fit:contain}
+.gmain iframe{width:100%;height:100%;border:0;background:#000;border-radius:10px}
+.gmain video{width:100%;height:100%;background:#000;border-radius:10px;object-fit:contain}
+.gnav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.92);box-shadow:0 2px 8px rgba(0,0,0,.25);font-size:26px;line-height:1;display:grid;place-items:center;padding:0 0 3px;color:var(--ink);z-index:2}
+.gp{left:6px}.gn{right:6px}
+.gcnt{position:absolute;top:8px;left:50%;transform:translateX(-50%);background:rgba(11,31,51,.75);color:#fff;font-size:12px;padding:1px 10px;border-radius:99px;z-index:2;direction:ltr}
+.gth{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding:2px 2px 4px}
+.gt{flex:none;width:58px;height:58px;border-radius:10px;border:2px solid transparent;background:#e9eef3;padding:0;overflow:hidden;display:grid;place-items:center;opacity:.75}
+.gt.on{border-color:var(--yel);opacity:1}
+.pdimg .gt img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
+.gv{color:var(--navy);font-size:18px}
+@media(min-width:760px){.gal{--gh:clamp(300px,52vh,460px)}}
+.mg{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.mt{width:84px}
+.mth{width:84px;height:84px;border-radius:8px;background:#e9eef3;overflow:hidden;display:grid;place-items:center;font-size:11px;color:#7d8da0;text-align:center;line-height:1.4}
+.mth img{width:100%;height:100%;object-fit:cover}
+.mt.cv .mth{box-shadow:0 0 0 2px var(--yel)}
+.mt .mb{display:flex;gap:4px;margin-top:4px}
+.mt .mb button{flex:1;border:1px solid #cbd4dd;background:#fff;border-radius:6px;padding:2px 0;font-size:15px;line-height:1.4}
+.mt .mb button:disabled{opacity:.35;cursor:default}
+.mt .cvt{display:block;font-size:10.5px;color:#8a6200;font-weight:700;text-align:center;min-height:14px}
+
 /* حركات وانتقالات */
 .trust .box{animation:up .9s .55s cubic-bezier(.2,.7,.2,1) backwards}
 .rv{opacity:0}
@@ -341,6 +370,7 @@ header.sc .hd{height:56px}
   <p class="sub rv" style="--d:.16s" data-t="psub"></p>
   <div class="ctrl rv" style="--d:.24s">
     <div class="pills" id="tabs"></div>
+    <select class="csel" id="catSel" aria-label="category"></select>
     <div class="sbox"><input id="q" type="search" data-tp="search" aria-label="search"></div>
   </div>
   <div class="grid" id="list"></div>
@@ -467,6 +497,10 @@ const fmt=n=>Number(n).toLocaleString("en-US");
 const sp=s=>{const a=String(s||"").split("|");return{ar:(a[0]||"").trim(),en:(a[1]||"").trim()}};
 const loc=s=>{const x=sp(s);return lang==="en"&&x.en?x.en:(x.ar||x.en)};
 const byCode=c=>DATA.products.find(p=>p.code===c);
+const newest=d=>{if(d&&Array.isArray(d.products))d.products.reverse()};
+const okMedia=m=>!!m&&typeof m.u==="string"&&((m.t==="i"&&/^https:\/\//.test(m.u))||(m.t==="v"&&/^https:\/\/(www\.youtube\.com\/embed\/[\w-]{11}|drive\.google\.com\/file\/d\/[\w-]+\/preview)$/.test(m.u))||(m.t==="f"&&/^https:\/\/\S+\.(mp4|webm|mov)(\?\S*)?$/i.test(m.u)));
+const gallery=p=>{const a=[];if(/^https:\/\//.test(p.img||""))a.push({t:"i",u:p.img});(Array.isArray(p.media)?p.media:[]).forEach(m=>{if(okMedia(m))a.push(m)});return a};
+const mcnt=p=>{const n=gallery(p).length;return n>1?`<span class="mcnt"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>${n}</span>`:""};
 const ICON='<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 30l4-12a4 4 0 0 1 4-3h20a4 4 0 0 1 4 3l4 12v8H6z"/><circle cx="14" cy="34" r="2.5"/><circle cx="34" cy="34" r="2.5"/></svg>';
 const imgTag=(u,alt)=>/^https:\/\//.test(u||"")?`<img src="${esc(u)}" alt="${esc(alt)}" loading="lazy">`:ICON;
 let tt;function toast(m,bad){const e=$("toast");e.textContent=m;e.className="toast show"+(bad?" bad":"");clearTimeout(tt);tt=setTimeout(()=>e.className="toast",2600)}
@@ -493,11 +527,11 @@ $("langBtn").onclick=()=>setLang(lang==="ar"?"en":"ar");
 /* ====== المتجر ====== */
 async function loadData(){
   if(URL_API.indexOf("PASTE")===0){$("list").innerHTML=`<div class="empty">${t("setup")}</div>`;return}
-  try{const c=localStorage.getItem("ex2data");if(c){DATA=JSON.parse(c);loaded=true;sanitizeCart();render()}}catch(e){}
+  try{const c=localStorage.getItem("ex2data");if(c){DATA=JSON.parse(c);newest(DATA);loaded=true;sanitizeCart();render()}}catch(e){}
   try{
     const r=await fetch(URL_API+"?action=data",{cache:"no-store"});
     const j=await r.json();if(!j.ok)throw 0;
-    DATA=j;loaded=true;try{localStorage.setItem("ex2data",JSON.stringify(j))}catch(e){}
+    DATA=j;loaded=true;try{localStorage.setItem("ex2data",JSON.stringify(j))}catch(e){}newest(DATA);
     sanitizeCart();render();
   }catch(e){
     if(!loaded)$("list").innerHTML=`<div class="empty">${t("loadfail")}</div>`;
@@ -519,7 +553,9 @@ function render(){
   const cats=["all"].concat([...new Set(DATA.products.map(p=>p.cat).filter(Boolean))]);
   if(!cats.includes(cat))cat="all";
   $("tabs").innerHTML=cats.map(c=>`<button class="pill${c===cat?" on":""}" data-c="${esc(c)}">${c==="all"?t("all"):esc(loc(c))}</button>`).join("");
-  [...$("tabs").children].forEach(b=>b.onclick=()=>{cat=b.dataset.c;[...$("tabs").children].forEach(x=>x.classList.toggle("on",x===b));drawList()});
+  [...$("tabs").children].forEach(b=>b.onclick=()=>{cat=b.dataset.c;[...$("tabs").children].forEach(x=>x.classList.toggle("on",x===b));$("catSel").value=cat;drawList()});
+  const cs=$("catSel");cs.innerHTML=cats.map(c=>`<option value="${esc(c)}">${c==="all"?esc(t("all")):esc(loc(c))}</option>`).join("");cs.value=cat;
+  cs.onchange=function(){cat=this.value;[...$("tabs").children].forEach(x=>x.classList.toggle("on",x.dataset.c===cat));drawList()};
   drawList();count();heroCats(cats);
 }
 function heroCats(cats){
@@ -534,7 +570,7 @@ function drawList(){
   $("list").innerHTML=items.map((p,i)=>{
     const out=p.stock<=0;
     const badge=out?`<span class="tagb d">${t("outb")}</span>`:(p.stock<=5?`<span class="tagb">${t("left").replace("{n}",fmt(p.stock))}</span>`:"");
-    return `<article class="card${out?" out":""}" data-c="${esc(p.code)}" tabindex="0" style="--i:${Math.min(i,10)}"><div class="pimg${/^https:\/\//.test(p.img||"")?" has":""}">${imgTag(p.img,loc(p.name))}${badge}</div><div class="cb"><div class="pcat">${esc(loc(p.cat))}</div><h3>${esc(loc(p.name))}</h3><p class="pd">${esc(loc(p.desc))}</p><div class="pf"><div class="pr">${fmt(p.price)}<small>${t("cur")}</small></div><button class="add" data-c="${esc(p.code)}"${out?" disabled":""}>${out?t("out"):t("add")}</button></div></div></article>`}).join("");
+    return `<article class="card${out?" out":""}" data-c="${esc(p.code)}" tabindex="0" style="--i:${Math.min(i,10)}"><div class="pimg${/^https:\/\//.test(p.img||"")?" has":""}">${imgTag(p.img,loc(p.name))}${badge}${mcnt(p)}</div><div class="cb"><div class="pcat">${esc(loc(p.cat))}</div><h3>${esc(loc(p.name))}</h3><p class="pd">${esc(loc(p.desc))}</p><div class="pf"><div class="pr">${fmt(p.price)}<small>${t("cur")}</small></div><button class="add" data-c="${esc(p.code)}"${out?" disabled":""}>${out?t("out"):t("add")}</button></div></div></article>`}).join("");
   document.querySelectorAll(".add:not(:disabled)").forEach(b=>b.onclick=()=>{
     const p=byCode(b.dataset.c),n=(cart[p.code]||0)+1;
     if(n>p.stock){toast(t("max"),1);return}
@@ -630,7 +666,7 @@ async function adminLoad(fromLogin){
       if(fromLogin&&$("aerr"))$("aerr").textContent=r.msg||"تعذر الدخول";else loginView();
       return false;
     }
-    A.d=r;sessionStorage.setItem("ex2pw",A.pw);adminView();return true;
+    A.d=r;newest(r);sessionStorage.setItem("ex2pw",A.pw);adminView();return true;
   }catch(e){
     if($("aerr"))$("aerr").textContent="مشكلة في الاتصال. جرب تاني.";else{toast("مشكلة في الاتصال",1);loginView()}
     return false;
@@ -675,36 +711,100 @@ async function saveProd(p,msg){
   return false;
 }
 const join2=(a,b)=>a+(b?" | "+b:"");
+function vidNorm(s){
+  s=String(s||"").trim();
+  if(!/^https:\/\//.test(s))return null;
+  let m=s.match(/(?:youtube\.com\/(?:watch\?(?:[^#\s]*&)?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/);
+  if(m)return{t:"v",u:"https://www.youtube.com/embed/"+m[1]};
+  m=s.match(/^https:\/\/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:[^#\s]*&)?id=)([\w-]+)/);
+  if(m)return{t:"v",u:"https://drive.google.com/file/d/"+m[1]+"/preview"};
+  if(/^https:\/\/\S+\.(mp4|webm|mov)(\?\S*)?$/i.test(s))return{t:"f",u:s};
+  return null;
+}
 function prodForm(p){
-  p=p||{};const cats=[...new Set(A.d.products.map(x=>sp(x.cat).ar).filter(Boolean))];
-  const n=sp(p.name),c=sp(p.cat),d=sp(p.desc);let imgData="",img=p.img||"";
+  p=p||{};
+  const cmap=Object.create(null);
+  A.d.products.forEach(x=>{const k=sp(x.cat);if(!k.ar)return;if(!cmap[k.ar])cmap[k.ar]=k.en||""});
+  const cats=Object.keys(cmap),NEWC="__new__",MAXM=8;
+  const n=sp(p.name),c=sp(p.cat),d=sp(p.desc);
+  const items=[];
+  if(/^https:\/\//.test(p.img||""))items.push({t:"i",u:p.img});
+  (Array.isArray(p.media)?p.media:[]).forEach(m=>{if(m&&m.u&&(m.t==="i"||m.t==="v"||m.t==="f"))items.push({t:m.t,u:m.u})});
   $("modb").innerHTML=`<h3>${p.code?"تعديل منتج":"إضافة منتج"}</h3>
   <label>اسم المنتج</label><input id="fn" value="${esc(n.ar)}">
-  <label>القسم (اختار أو اكتب قسم جديد)</label><input id="fc" list="cl" value="${esc(c.ar)}"><datalist id="cl">${cats.map(x=>`<option value="${esc(x)}">`).join("")}</datalist>
+  <label>القسم</label><select id="fcs"><option value="">اختار القسم...</option>${cats.map(x=>`<option value="${esc(x)}"${x===c.ar?" selected":""}>${esc(x)}</option>`).join("")}<option value="${NEWC}">+ قسم جديد...</option></select>
+  <div id="cnw" style="display:none"><label>اسم القسم الجديد</label><input id="fc"><label>Category name (English - اختياري)</label><input id="fce" dir="ltr"></div>
   <div class="two"><div><label>السعر (جنيه)</label><input id="fp" type="number" min="0" inputmode="decimal" value="${p.price||""}"></div><div><label>الكمية المتاحة</label><input id="fs" type="number" min="0" inputmode="numeric" value="${p.stock==null?"":p.stock}"></div></div>
   <label>وصف قصير (اختياري)</label><input id="fd" value="${esc(d.ar)}">
   <div class="en"><b>النسخة الإنجليزية (اختياري)</b>
   <label>Product name</label><input id="fne" dir="ltr" value="${esc(n.en)}">
-  <label>Category</label><input id="fce" dir="ltr" value="${esc(c.en)}">
   <label>Short description</label><input id="fde" dir="ltr" value="${esc(d.en)}"></div>
-  <label>صورة المنتج</label><div style="display:flex;gap:12px;align-items:center"><div class="prev" id="pv">${/^https:\/\//.test(img)?`<img src="${esc(img)}" alt="">`:"بدون صورة"}</div><div><input id="ff" type="file" accept="image/*"></div></div>
+  <label>صور وفيديوهات المنتج (لحد ${MAXM} - أول صورة هي الغلاف اللي بتظهر على الكارت)</label>
+  <div class="mg" id="mg"></div>
+  <label>إضافة صور (ممكن تختار أكتر من صورة)</label><input id="ff" type="file" accept="image/*" multiple>
+  <label>إضافة فيديو من الجهاز (MP4 أو WebM أو MOV - لحد 10 ميجا)</label><input id="fvf" type="file" accept="video/mp4,video/webm,video/quicktime">
+  <label>أو رابط فيديو (يوتيوب أو درايف أو ملف mp4 مباشر)</label><div class="bar2"><input id="fvl" dir="ltr" placeholder="https://..."><button type="button" id="fva">إضافة</button></div>
   <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="fv" ${p.show===false?"":"checked"}> ظاهر في المتجر</label>
   <div class="err" id="ferr"></div><button class="go y" id="fsv">حفظ</button><button class="go ghost" id="fcn">إلغاء</button>`;
   $("mod").classList.add("show");
   $("fcn").onclick=()=>$("mod").classList.remove("show");
+  const syncCat=()=>{$("cnw").style.display=$("fcs").value===NEWC?"block":"none"};
+  $("fcs").onchange=syncCat;syncCat();
+  const drawMg=()=>{
+    const ci=items.findIndex(m=>m.t==="i");
+    $("mg").innerHTML=items.length?items.map((m,k)=>`<div class="mt${k===ci?" cv":""}"><div class="mth">${m.t==="i"?`<img src="${esc(m.data||m.u)}" alt="">`:(m.t==="vf"?"فيديو<br>(ملف)":"فيديو")}</div><span class="cvt">${k===ci?"الغلاف":""}</span><div class="mb">${m.t==="i"?`<button type="button" data-m="f" data-i="${k}" title="اجعلها الغلاف"${k===ci?" disabled":""}>&#9733;</button>`:""}<button type="button" data-m="x" data-i="${k}" title="حذف">&times;</button></div></div>`).join(""):'<small style="color:var(--mut)">مفيش صور أو فيديوهات لسه.</small>';
+    $("mg").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+      const k=Number(b.dataset.i);
+      if(b.dataset.m==="x")items.splice(k,1);else items.unshift(items.splice(k,1)[0]);
+      drawMg();
+    });
+  };
+  drawMg();
+  const full=()=>{if(items.length>=MAXM){$("ferr").textContent="وصلت للحد الأقصى ("+MAXM+")";return true}return false};
   $("ff").onchange=async function(){
-    const f=this.files[0];if(!f)return;
-    try{imgData=await shrink(f);img="";$("pv").innerHTML=`<img src="${imgData}" alt="">`}catch(e){$("ferr").textContent="تعذر قراءة الصورة"}
+    const fs=[...this.files];this.value="";$("ferr").textContent="";
+    for(const f of fs){
+      if(full())break;
+      try{items.push({t:"i",data:await shrink(f)})}catch(e){$("ferr").textContent="تعذر قراءة إحدى الصور"}
+    }
+    drawMg();
+  };
+  $("fvf").onchange=function(){
+    const f=this.files[0];this.value="";$("ferr").textContent="";
+    if(!f||full())return;
+    if(!/^video\/(mp4|webm|quicktime)$/.test(f.type)){$("ferr").textContent="نوع الفيديو لازم يكون MP4 أو WebM أو MOV";return}
+    if(f.size>10*1024*1024){$("ferr").textContent="الفيديو أكبر من 10 ميجا. ارفعه على يوتيوب وحط الرابط.";return}
+    const fr=new FileReader();
+    fr.onerror=()=>{$("ferr").textContent="تعذر قراءة الفيديو"};
+    fr.onload=()=>{items.push({t:"vf",data:fr.result});drawMg()};
+    fr.readAsDataURL(f);
+  };
+  $("fva").onclick=()=>{
+    $("ferr").textContent="";
+    const v=$("fvl").value.trim();if(!v||full())return;
+    const m=vidNorm(v);
+    if(!m){$("ferr").textContent="الرابط ده مش مدعوم. استخدم رابط يوتيوب أو درايف أو ملف mp4 مباشر";return}
+    items.push(m);$("fvl").value="";drawMg();
   };
   $("fsv").onclick=async()=>{
     const name=$("fn").value.trim(),price=Number($("fp").value),stock=$("fs").value;
     if(name.length<2)return $("ferr").textContent="اكتب اسم المنتج";
+    let catAr,catEn;
+    if($("fcs").value===NEWC){
+      catAr=$("fc").value.trim();catEn=$("fce").value.trim();
+      if(!catAr)return $("ferr").textContent="اكتب اسم القسم الجديد";
+    }else{
+      catAr=$("fcs").value;
+      if(!catAr)return $("ferr").textContent="اختار القسم";
+      catEn=cmap[catAr]||"";
+    }
     if(!(price>0))return $("ferr").textContent="اكتب السعر";
     if(stock==="")return $("ferr").textContent="اكتب الكمية المتاحة";
     const bad=[$("fn"),$("fc"),$("fd"),$("fne"),$("fce"),$("fde")].some(e=>e.value.indexOf("|")>-1);
     if(bad)return $("ferr").textContent="ممنوع استخدام علامة | في الكتابة";
-    $("fsv").disabled=true;$("fsv").textContent="جاري الحفظ...";
-    const ok=await saveProd({code:p.code||"",name:join2(name,$("fne").value.trim()),cat:join2($("fc").value.trim()||"أخرى",$("fce").value.trim()),desc:join2($("fd").value.trim(),$("fde").value.trim()),price,stock:Math.max(0,parseInt(stock)||0),img,imgData,show:$("fv").checked});
+    $("fsv").disabled=true;$("fsv").textContent="جاري الرفع والحفظ...";
+    const media=items.map(m=>m.data?{t:m.t,data:m.data}:{t:m.t,u:m.u});
+    const ok=await saveProd({code:p.code||"",name:join2(name,$("fne").value.trim()),cat:join2(catAr,catEn),desc:join2($("fd").value.trim(),$("fde").value.trim()),price,stock:Math.max(0,parseInt(stock)||0),img:"",media,show:$("fv").checked});
     if(!ok){$("fsv").disabled=false;$("fsv").textContent="حفظ"}
   };
 }
@@ -760,23 +860,53 @@ addEventListener("scroll",()=>document.querySelector("header").classList.toggle(
   els.forEach(e=>io.observe(e));
 })();
 /* --- تفاصيل المنتج --- */
-let PD=null;
+let PD=null,GI=0;
 const bigImg=u=>String(u).replace(/sz=w\d+/,"sz=w1200");
 function addOne(p){const n=(cart[p.code]||0)+1;if(n>p.stock){toast(t("max"),1);return false}cart[p.code]=n;saveCart();count();bump();return true}
 function drawProd(){
   const p=byCode(PD);if(!p){closeProd();return}
   const out=p.stock<=0,has=/^https:\/\//.test(p.img||""),d=loc(p.desc);
   const st=out?`<span class="stk z">${t("out")}</span>`:(p.stock<=5?`<span class="stk w">${t("left").replace("{n}",fmt(p.stock))}</span>`:`<span class="stk">${t("instock")}</span>`);
-  $("pdb").innerHTML=`<div class="pdin"><div class="pdimg${out?" out":""}">${has?`<img src="${esc(bigImg(p.img))}" alt="${esc(loc(p.name))}">`:ICON}</div><div class="pdinfo"><div class="pcat">${esc(loc(p.cat))}</div><h2>${esc(loc(p.name))}</h2><div class="pdp">${fmt(p.price)}<small>${t("cur")}</small></div>${st}${d?`<p class="pdd">${esc(d)}</p>`:""}<button class="go y" id="pdo"${out?" disabled":""}>${out?t("out"):t("ordnow")}</button><button class="go ghost" id="pda"${out?" disabled":""}>${t("add")}</button></div></div>`;
+  $("pdb").innerHTML=`<div class="pdin"><div class="pdimg${out?" out":""}" id="galw"></div><div class="pdinfo"><div class="pcat">${esc(loc(p.cat))}</div><h2>${esc(loc(p.name))}</h2><div class="pdp">${fmt(p.price)}<small>${t("cur")}</small></div>${st}${d?`<p class="pdd">${esc(d)}</p>`:""}<button class="go y" id="pdo"${out?" disabled":""}>${out?t("out"):t("ordnow")}</button><button class="go ghost" id="pda"${out?" disabled":""}>${t("add")}</button></div></div>`;
+  drawGal(p);
   if(!out){
     $("pdo").onclick=()=>{const had=cart[p.code]>0;if(addOne(p)||had){closeProd();openCart()}};
     $("pda").onclick=()=>{if(addOne(p))toast(t("added"))};
   }
 }
-function openProd(c){PD=c;drawProd();$("pshade").classList.add("show");$("pdlg").classList.add("show");$("pdlg").scrollTop=0}
+
+function drawGal(p){
+  const box=$("galw");if(!box)return;
+  const g=gallery(p);
+  if(!g.length){box.innerHTML=ICON;return}
+  if(GI>=g.length||GI<0)GI=0;
+  const cur=g[GI],many=g.length>1,nm=esc(loc(p.name));
+  let main;
+  if(cur.t==="i")main=`<img src="${esc(bigImg(cur.u))}" alt="${nm}">`;
+  else if(cur.t==="v")main=`<iframe src="${esc(cur.u)}" title="${nm}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+  else main=`<video src="${esc(cur.u)}" controls playsinline preload="metadata"></video>`;
+  const nav=many?`<button class="gnav gp" id="gprev" aria-label="prev">&#8249;</button><button class="gnav gn" id="gnext" aria-label="next">&#8250;</button><span class="gcnt">${GI+1} / ${g.length}</span>`:"";
+  const ths=many?`<div class="gth">`+g.map((m,i)=>`<button class="gt${i===GI?" on":""}" data-i="${i}" aria-label="${i+1}">${m.t==="i"?`<img src="${esc(m.u)}" alt="" loading="lazy">`:`<span class="gv">&#9654;</span>`}</button>`).join("")+`</div>`:"";
+  box.innerHTML=`<div class="gal" dir="ltr"><div class="gmain" id="gmain">${main}${nav}</div>${ths}</div>`;
+  if(many){
+    const go=i=>{GI=(i+g.length)%g.length;drawGal(p)};
+    $("gprev").onclick=()=>go(GI-1);
+    $("gnext").onclick=()=>go(GI+1);
+    box.querySelectorAll(".gt").forEach(b=>b.onclick=()=>go(Number(b.dataset.i)));
+    let x0=null;const gm=$("gmain");
+    gm.ontouchstart=e=>{x0=e.touches[0].clientX};
+    gm.ontouchend=e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(dx)>45)go(dx<0?GI+1:GI-1)};
+  }
+}
+function openProd(c){PD=c;GI=0;drawProd();$("pshade").classList.add("show");$("pdlg").classList.add("show");$("pdlg").scrollTop=0}
 function closeProd(){PD=null;$("pshade").classList.remove("show");$("pdlg").classList.remove("show")}
 $("pdx").onclick=closeProd;$("pshade").onclick=closeProd;
 addEventListener("keydown",e=>{if(e.key==="Escape")closeProd()});
+addEventListener("keydown",e=>{
+  if(!PD||(e.key!=="ArrowLeft"&&e.key!=="ArrowRight"))return;
+  const p=byCode(PD);if(!p)return;const g=gallery(p);if(g.length<2)return;
+  GI=(GI+(e.key==="ArrowRight"?1:-1)+g.length)%g.length;drawGal(p);
+});
 $("list").onclick=e=>{if(e.target.closest(".add"))return;const c=e.target.closest(".card");if(c)openProd(c.dataset.c)};
 $("list").onkeydown=e=>{if(e.key==="Enter"&&!e.target.closest(".add")){const c=e.target.closest(".card");if(c)openProd(c.dataset.c)}};
 
